@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Totem Hotel IA</title>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef; text-align: center; padding: 50px; color: #333; }
+  .screen { display: none; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); max-width: 600px; margin: auto; min-height: 400px; }
+  .active { display: block; }
+  h1 { color: #2c3e50; }
+  button { display: block; width: 100%; padding: 20px; margin: 15px 0; font-size: 20px; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; color: white; transition: 0.3s; }
+  .btn-blue { background: #007bff; }
+  .btn-green { background: #28a745; }
+  .btn-dark { background: #343a40; }
+  .btn-red { background: #dc3545; }
+  button:hover { opacity: 0.8; }
+  input { padding: 15px; width: 80%; font-size: 20px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; text-align: center; }
+  .box { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #ddd; }
+</style>
+</head>
+<body>
+
+<!-- TELA INICIAL -->
+<div id="home" class="screen active">
+  <h1>🏨 BEM-VINDO AO HOTEL IA</h1>
+  <p style="font-size: 22px;">Como podemos ajudar?</p>
+  <button class="btn-blue" onclick="nav('checkin-1')">🔵 FAZER CHECK-IN</button>
+  <button class="btn-green" onclick="nav('checkout-1')">🟢 FAZER CHECK-OUT</button>
+  <button class="btn-dark" onclick="nav('ai-1')">🤖 FALAR COM A IA</button>
+  <button class="btn-red" onclick="nav('reception')">👩‍💼 CHAMAR RECEPCIONISTA</button>
+</div>
+
+<!-- FLUXO DE CHECK-IN -->
+<div id="checkin-1" class="screen">
+  <h2>Fazer Check-in</h2>
+  <p>Olá! Para iniciarmos seu check-in, informe o número da sua reserva:</p>
+  <input type="text" placeholder="Ex: 12345">
+  <button class="btn-blue" onclick="nav('checkin-2')">Confirmar</button>
+  <button class="btn-dark" onclick="nav('home')">Voltar</button>
+</div>
+
+<div id="checkin-2" class="screen">
+  <h2>✅ CHECK-IN CONCLUÍDO</h2>
+  <div class="box">
+    <p><strong>Quarto:</strong> 205</p>
+    <p><strong>Café da manhã:</strong> 7h às 10h</p>
+    <p><strong>Wi-Fi:</strong> HOTELIA205</p>
+  </div>
+  <p>Pronto! Pegue sua chave na bandeja abaixo.</p>
+  <button class="btn-green" onclick="nav('home')">Finalizar</button>
+</div>
+
+<!-- FLUXO DE CHECK-OUT -->
+<div id="checkout-1" class="screen">
+  <h2>Fazer Check-out</h2>
+  <div class="box">
+    <p><strong>Hóspede:</strong> Maria</p>
+    <p><strong>Quarto:</strong> 205</p>
+    <hr>
+    <p>Diária: R$ 250,00</p>
+    <p>Restaurante: R$ 45,00</p>
+    <h3>Total: R$ 295,00</h3>
+  </div>
+  <p>Deseja confirmar o check-out?</p>
+  <button class="btn-green" onclick="nav('checkout-2')">SIM</button>
+  <button class="btn-dark" onclick="nav('home')">Voltar</button>
+</div>
+
+<div id="checkout-2" class="screen">
+  <h2>🎉 CHECK-OUT REALIZADO!</h2>
+  <p>Obrigado por se hospedar conosco. Volte sempre!</p>
+  <button class="btn-blue" onclick="nav('home')">Início</button>
+</div>
+
+<!-- FLUXO DA IA (PROBLEMA NO QUARTO) -->
+<div id="ai-1" class="screen">
+  <h2>Falar com a IA</h2>
+  <p>Descreva o que você precisa:</p>
+  <input type="text" value="Meu quarto está com problema no ar-condicionado." readonly>
+  <button class="btn-blue" onclick="nav('ai-2')">Enviar</button>
+  <button class="btn-dark" onclick="nav('home')">Voltar</button>
+</div>
+
+<div id="ai-2" class="screen">
+  <h2>Atenção</h2>
+  <p>⚠️ "Essa situação necessita de atendimento da equipe de manutenção do hotel."</p>
+  <p>Deseja chamar um recepcionista para auxiliá-lo?</p>
+  <button class="btn-red" onclick="nav('reception')">👩‍💼 CHAMAR RECEPCIONISTA</button>
+  <button class="btn-dark" onclick="nav('home')">Voltar</button>
+</div>
+
+<!-- FLUXO DO RECEPCIONISTA -->
+<div id="reception" class="screen">
+  <h2>Atendimento Humano</h2>
+  <p>👩‍💼 <strong>Recepcionista acionado!</strong></p>
+  <p>Por favor, aguarde. Um de nossos colaboradores já está a caminho para ajudá-lo de forma personalizada.</p>
+  <button class="btn-blue" onclick="nav('home')">Voltar ao Início</button>
+</div>
+
+<script>
+  function nav(screenId) {
+    var screens = document.querySelectorAll('.screen');
+    for (var i = 0; i < screens.length; i++) {
+      screens[i].classList.remove('active');
+    }
+    document.getElementById(screenId).classList.add('active');
+  }
+</script>
+</body>
+</html>
