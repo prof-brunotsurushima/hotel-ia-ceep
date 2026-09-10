@@ -4,108 +4,247 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Totem Hotel IA</title>
+<!-- Biblioteca de Ícones (FontAwesome) para os botões -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef; text-align: center; padding: 50px; color: #333; }
-  .screen { display: none; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); max-width: 600px; margin: auto; min-height: 400px; }
-  .active { display: block; }
-  h1 { color: #2c3e50; }
-  button { display: block; width: 100%; padding: 20px; margin: 15px 0; font-size: 20px; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; color: white; transition: 0.3s; }
-  .btn-blue { background: #007bff; }
-  .btn-green { background: #28a745; }
-  .btn-dark { background: #343a40; }
-  .btn-red { background: #dc3545; }
-  button:hover { opacity: 0.8; }
-  input { padding: 15px; width: 80%; font-size: 20px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; text-align: center; }
-  .box { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #ddd; }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    /* Fundo com leve gradiente azulado parecido com a foto */
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+    height: 100vh;
+    overflow: hidden;
+    color: #1e293b;
+  }
+
+  /* O contêiner principal que divide a tela em duas partes */
+  .container {
+    display: flex;
+    height: 100vh;
+    padding: 40px;
+    gap: 40px;
+  }
+
+  /* --- COLUNA ESQUERDA --- */
+  .left-panel {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 20px;
+  }
+
+  .logo-area {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .logo-area i {
+    font-size: 50px;
+    color: #0369a1;
+  }
+
+  .logo-area h1 {
+    font-size: 28px;
+    color: #0369a1;
+    margin-top: 5px;
+    letter-spacing: 2px;
+  }
+
+  .welcome-text {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .welcome-text h2 {
+    font-size: 26px;
+    color: #0f172a;
+    margin-bottom: 5px;
+  }
+
+  .welcome-text p {
+    font-size: 18px;
+    color: #475569;
+  }
+
+  /* Botões principais */
+  .menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn {
+    background-color: #0284c7;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    text-align: left;
+    transition: transform 0.1s, background-color 0.2s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+
+  .btn:hover {
+    background-color: #0369a1;
+  }
+
+  .btn-icon {
+    font-size: 28px;
+    width: 40px;
+    text-align: center;
+  }
+
+  .btn-text h3 {
+    font-size: 20px;
+    margin-bottom: 3px;
+    font-weight: 600;
+  }
+
+  .btn-text p {
+    font-size: 14px;
+    opacity: 0.9;
+    font-weight: 300;
+  }
+
+  /* --- COLUNA DIREITA --- */
+  .right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .hotel-image {
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+
+  /* Área do Robô */
+  .robot-area {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+  }
+
+  .robot-icon {
+    font-size: 80px;
+    color: #0284c7;
+    background: white;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .speech-bubble {
+    background: #0284c7;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 20px;
+    border-bottom-right-radius: 0;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+
+  /* Esconde as telas secundárias no início */
+  .screen { display: none; }
+  .active-screen { display: flex; }
+
 </style>
 </head>
 <body>
 
-<!-- TELA INICIAL -->
-<div id="home" class="screen active">
-  <h1>🏨 BEM-VINDO AO HOTEL IA</h1>
-  <p style="font-size: 22px;">Como podemos ajudar?</p>
-  <button class="btn-blue" onclick="nav('checkin-1')">🔵 FAZER CHECK-IN</button>
-  <button class="btn-green" onclick="nav('checkout-1')">🟢 FAZER CHECK-OUT</button>
-  <button class="btn-dark" onclick="nav('ai-1')">🤖 FALAR COM A IA</button>
-  <button class="btn-red" onclick="nav('reception')">👩‍💼 CHAMAR RECEPCIONISTA</button>
-</div>
+<!-- TELA PRINCIPAL COM O DESIGN DA FOTO -->
+<div id="home" class="container screen active-screen">
+  
+  <div class="left-panel">
+    <div class="logo-area">
+      <i class="fa-solid fa-bed"></i>
+      <h1>HOTEL</h1>
+    </div>
 
-<!-- FLUXO DE CHECK-IN -->
-<div id="checkin-1" class="screen">
-  <h2>Fazer Check-in</h2>
-  <p>Olá! Para iniciarmos seu check-in, informe o número da sua reserva:</p>
-  <input type="text" placeholder="Ex: 12345">
-  <button class="btn-blue" onclick="nav('checkin-2')">Confirmar</button>
-  <button class="btn-dark" onclick="nav('home')">Voltar</button>
-</div>
+    <div class="welcome-text">
+      <h2>Olá, seja bem-vindo!</h2>
+      <p>Como podemos te ajudar hoje?</p>
+    </div>
 
-<div id="checkin-2" class="screen">
-  <h2>✅ CHECK-IN CONCLUÍDO</h2>
-  <div class="box">
-    <p><strong>Quarto:</strong> 205</p>
-    <p><strong>Café da manhã:</strong> 7h às 10h</p>
-    <p><strong>Wi-Fi:</strong> HOTELIA205</p>
+    <div class="menu-buttons">
+      <button class="btn" onclick="alert('Indo para Check-in...')">
+        <div class="btn-icon"><i class="fa-solid fa-user"></i></div>
+        <div class="btn-text">
+          <h3>Check-in</h3>
+          <p>Faça seu check-in de forma rápida e fácil</p>
+        </div>
+      </button>
+
+      <button class="btn" onclick="alert('Indo para Check-out...')">
+        <div class="btn-icon"><i class="fa-solid fa-suitcase"></i></div>
+        <div class="btn-text">
+          <h3>Check-out</h3>
+          <p>Finalize sua estadia</p>
+        </div>
+      </button>
+
+      <button class="btn" onclick="alert('Indo para Informações...')">
+        <div class="btn-icon"><i class="fa-solid fa-circle-info"></i></div>
+        <div class="btn-text">
+          <h3>Informações</h3>
+          <p>Tire suas dúvidas sobre o hotel</p>
+        </div>
+      </button>
+
+      <button class="btn" onclick="dispararAlarme()" style="background-color: #0f172a;">
+        <div class="btn-icon"><i class="fa-solid fa-headset"></i></div>
+        <div class="btn-text">
+          <h3>Falar com a recepção</h3>
+          <p>Precisa de ajuda? Fale com um atendente</p>
+        </div>
+      </button>
+    </div>
   </div>
-  <p>Pronto! Pegue sua chave na bandeja abaixo.</p>
-  <button class="btn-green" onclick="nav('home')">Finalizar</button>
-</div>
 
-<!-- FLUXO DE CHECK-OUT -->
-<div id="checkout-1" class="screen">
-  <h2>Fazer Check-out</h2>
-  <div class="box">
-    <p><strong>Hóspede:</strong> Maria</p>
-    <p><strong>Quarto:</strong> 205</p>
-    <hr>
-    <p>Diária: R$ 250,00</p>
-    <p>Restaurante: R$ 45,00</p>
-    <h3>Total: R$ 295,00</h3>
+  <div class="right-panel">
+    <!-- Imagem demonstrativa de uma recepção (você pode trocar pelo link de uma foto do projeto de vocês) -->
+    <img src="https://images.unsplash.com/photo-1562790351-d273a961e0e9?q=80&w=800&auto=format&fit=crop" alt="Recepção do Hotel" class="hotel-image">
+    
+    <div class="robot-area">
+      <div class="speech-bubble">Estamos aqui<br>para te atender!</div>
+      <div class="robot-icon"><i class="fa-solid fa-robot"></i></div>
+    </div>
   </div>
-  <p>Deseja confirmar o check-out?</p>
-  <button class="btn-green" onclick="nav('checkout-2')">SIM</button>
-  <button class="btn-dark" onclick="nav('home')">Voltar</button>
-</div>
 
-<div id="checkout-2" class="screen">
-  <h2>🎉 CHECK-OUT REALIZADO!</h2>
-  <p>Obrigado por se hospedar conosco. Volte sempre!</p>
-  <button class="btn-blue" onclick="nav('home')">Início</button>
-</div>
-
-<!-- FLUXO DA IA (PROBLEMA NO QUARTO) -->
-<div id="ai-1" class="screen">
-  <h2>Falar com a IA</h2>
-  <p>Descreva o que você precisa:</p>
-  <input type="text" value="Meu quarto está com problema no ar-condicionado." readonly>
-  <button class="btn-blue" onclick="nav('ai-2')">Enviar</button>
-  <button class="btn-dark" onclick="nav('home')">Voltar</button>
-</div>
-
-<div id="ai-2" class="screen">
-  <h2>Atenção</h2>
-  <p>⚠️ "Essa situação necessita de atendimento da equipe de manutenção do hotel."</p>
-  <p>Deseja chamar um recepcionista para auxiliá-lo?</p>
-  <button class="btn-red" onclick="nav('reception')">👩‍💼 CHAMAR RECEPCIONISTA</button>
-  <button class="btn-dark" onclick="nav('home')">Voltar</button>
-</div>
-
-<!-- FLUXO DO RECEPCIONISTA -->
-<div id="reception" class="screen">
-  <h2>Atendimento Humano</h2>
-  <p>👩‍💼 <strong>Recepcionista acionado!</strong></p>
-  <p>Por favor, aguarde. Um de nossos colaboradores já está a caminho para ajudá-lo de forma personalizada.</p>
-  <button class="btn-blue" onclick="nav('home')">Voltar ao Início</button>
 </div>
 
 <script>
-  function nav(screenId) {
-    var screens = document.querySelectorAll('.screen');
-    for (var i = 0; i < screens.length; i++) {
-      screens[i].classList.remove('active');
-    }
-    document.getElementById(screenId).classList.add('active');
+  function dispararAlarme() {
+    alert("🚨 ALERTA ENVIADO! O dispositivo da recepção está tocando.");
+    // Aqui entra o código de comunicação (WebSocket, Fetch ou BroadcastChannel)
+    // que discutimos na mensagem anterior.
   }
 </script>
+
 </body>
 </html>
