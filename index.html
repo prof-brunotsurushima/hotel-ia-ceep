@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Totem Hotel IA</title>
-<!-- Biblioteca de Ícones (FontAwesome) para os botões -->
+<!-- Biblioteca de Ícones (FontAwesome) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   * {
@@ -15,112 +15,128 @@
   
   body {
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    /* Fundo com leve gradiente azulado parecido com a foto */
     background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
-    height: 100vh;
-    overflow: hidden;
     color: #1e293b;
+    /* Permite rolagem no celular, esconde no tablet/PC */
+    min-height: 100vh;
+    overflow-x: hidden; 
   }
 
-  /* O contêiner principal que divide a tela em duas partes */
+  /* Estrutura principal */
   .container {
     display: flex;
     height: 100vh;
     padding: 40px;
     gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
   }
 
-  /* --- COLUNA ESQUERDA --- */
+  /* --- COLUNA ESQUERDA (Onde as telas trocam) --- */
   .left-panel {
     flex: 1.2;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding-right: 20px;
+    position: relative;
   }
 
-  .logo-area {
-    text-align: center;
-    margin-bottom: 30px;
+  .screen {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
   }
 
-  .logo-area i {
-    font-size: 50px;
-    color: #0369a1;
+  .active-screen {
+    display: block;
   }
 
-  .logo-area h1 {
-    font-size: 28px;
-    color: #0369a1;
-    margin-top: 5px;
-    letter-spacing: 2px;
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .welcome-text {
-    text-align: center;
-    margin-bottom: 30px;
-  }
+  /* Textos e Logo */
+  .logo-area { text-align: center; margin-bottom: 25px; }
+  .logo-area i { font-size: 50px; color: #0369a1; }
+  .logo-area h1 { font-size: 28px; color: #0369a1; margin-top: 5px; letter-spacing: 2px; }
+  
+  .header-text { text-align: center; margin-bottom: 30px; }
+  .header-text h2 { font-size: 26px; color: #0f172a; margin-bottom: 5px; }
+  .header-text p { font-size: 18px; color: #475569; }
 
-  .welcome-text h2 {
-    font-size: 26px;
-    color: #0f172a;
-    margin-bottom: 5px;
-  }
-
-  .welcome-text p {
-    font-size: 18px;
-    color: #475569;
-  }
-
-  /* Botões principais */
-  .menu-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .btn {
+  /* Botões de Menu (Estilo do print) */
+  .menu-buttons { display: flex; flex-direction: column; gap: 12px; }
+  .btn-menu {
     background-color: #0284c7;
     color: white;
     border: none;
     border-radius: 12px;
-    padding: 15px 25px;
+    padding: 15px 20px;
     display: flex;
     align-items: center;
     gap: 20px;
     cursor: pointer;
     text-align: left;
-    transition: transform 0.1s, background-color 0.2s;
+    transition: 0.2s;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
   }
+  .btn-menu:active { transform: scale(0.98); }
+  .btn-menu:hover { background-color: #0369a1; }
+  .btn-menu .btn-icon { font-size: 28px; width: 40px; text-align: center; }
+  .btn-menu .btn-text h3 { font-size: 18px; margin-bottom: 3px; font-weight: 600; }
+  .btn-menu .btn-text p { font-size: 13px; opacity: 0.9; font-weight: 300; }
 
-  .btn:active {
-    transform: scale(0.98);
-  }
-
-  .btn:hover {
-    background-color: #0369a1;
-  }
-
-  .btn-icon {
-    font-size: 28px;
-    width: 40px;
+  /* Botões de Ação (Telas internas) */
+  .btn-action {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    transition: 0.2s;
     text-align: center;
   }
+  .btn-action:hover { opacity: 0.9; }
+  .btn-primary { background: #0284c7; }
+  .btn-success { background: #16a34a; }
+  .btn-danger { background: #dc2626; }
+  .btn-secondary { background: #64748b; }
 
-  .btn-text h3 {
-    font-size: 20px;
-    margin-bottom: 3px;
-    font-weight: 600;
+  /* Elementos de Formulário e Caixas */
+  input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    text-align: center;
+    outline: none;
   }
-
-  .btn-text p {
-    font-size: 14px;
-    opacity: 0.9;
-    font-weight: 300;
+  input[type="text"]:focus { border-color: #0284c7; box-shadow: 0 0 5px rgba(2, 132, 199, 0.3); }
+  
+  .info-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.6;
   }
+  .info-box hr { border: 0; border-top: 1px solid #e2e8f0; margin: 10px 0; }
+  .text-center { text-align: center; }
 
-  /* --- COLUNA DIREITA --- */
+  /* --- COLUNA DIREITA (Imagem e Robô) --- */
   .right-panel {
     flex: 1;
     display: flex;
@@ -129,16 +145,13 @@
     border-radius: 20px;
     overflow: hidden;
   }
-
   .hotel-image {
     width: 100%;
-    height: 60%;
+    height: 100%;
     object-fit: cover;
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1);
   }
-
-  /* Área do Robô */
   .robot-area {
     position: absolute;
     bottom: 20px;
@@ -147,7 +160,6 @@
     align-items: flex-end;
     gap: 15px;
   }
-
   .robot-icon {
     font-size: 80px;
     color: #0284c7;
@@ -156,82 +168,150 @@
     padding: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   }
-
   .speech-bubble {
     background: #0284c7;
     color: white;
     padding: 15px 20px;
     border-radius: 20px;
     border-bottom-right-radius: 0;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     margin-bottom: 20px;
   }
 
-  /* Esconde as telas secundárias no início */
-  .screen { display: none; }
-  .active-screen { display: flex; }
-
+  /* --- RESPONSIVIDADE (Para Celular) --- */
+  @media (max-width: 900px) {
+    .container {
+      flex-direction: column;
+      height: auto;
+      padding: 20px;
+    }
+    .left-panel {
+      padding-right: 0;
+    }
+    .right-panel {
+      height: 300px; /* Altura fixa para a imagem no celular */
+      margin-top: 20px;
+    }
+    .robot-icon { font-size: 60px; padding: 8px; }
+    .speech-bubble { font-size: 14px; padding: 10px 15px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- TELA PRINCIPAL COM O DESIGN DA FOTO -->
-<div id="home" class="container screen active-screen">
+<div class="container">
   
+  <!-- LADO ESQUERDO: TELAS DINÂMICAS -->
   <div class="left-panel">
-    <div class="logo-area">
-      <i class="fa-solid fa-bed"></i>
-      <h1>HOTEL</h1>
+    
+    <!-- TELA 1: HOME -->
+    <div id="home" class="screen active-screen">
+      <div class="logo-area"><i class="fa-solid fa-bed"></i><h1>HOTEL</h1></div>
+      <div class="header-text"><h2>Olá, seja bem-vindo!</h2><p>Como podemos te ajudar hoje?</p></div>
+      <div class="menu-buttons">
+        <button class="btn-menu" onclick="nav('checkin-1')">
+          <div class="btn-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="btn-text"><h3>Check-in</h3><p>Faça seu check-in de forma rápida e fácil</p></div>
+        </button>
+        <button class="btn-menu" onclick="nav('checkout-1')">
+          <div class="btn-icon"><i class="fa-solid fa-suitcase"></i></div>
+          <div class="btn-text"><h3>Check-out</h3><p>Finalize sua estadia</p></div>
+        </button>
+        <button class="btn-menu" onclick="nav('ai-1')">
+          <div class="btn-icon"><i class="fa-solid fa-circle-info"></i></div>
+          <div class="btn-text"><h3>Informações</h3><p>Tire suas dúvidas sobre o hotel</p></div>
+        </button>
+        <button class="btn-menu" onclick="nav('reception'); dispararAlarme()" style="background-color: #0f172a;">
+          <div class="btn-icon"><i class="fa-solid fa-headset"></i></div>
+          <div class="btn-text"><h3>Falar com a recepção</h3><p>Precisa de ajuda? Fale com um atendente</p></div>
+        </button>
+      </div>
     </div>
 
-    <div class="welcome-text">
-      <h2>Olá, seja bem-vindo!</h2>
-      <p>Como podemos te ajudar hoje?</p>
+    <!-- TELA 2: CHECK-IN PASSO 1 -->
+    <div id="checkin-1" class="screen text-center">
+      <div class="logo-area"><i class="fa-solid fa-user-check"></i><h2>Fazer Check-in</h2></div>
+      <p style="margin-bottom: 15px;">Para iniciarmos, informe o número da sua reserva:</p>
+      <input type="text" placeholder="Ex: 12345">
+      <button class="btn-action btn-primary" onclick="nav('checkin-2')">Confirmar</button>
+      <button class="btn-action btn-secondary" onclick="nav('home')">Voltar</button>
     </div>
 
-    <div class="menu-buttons">
-      <button class="btn" onclick="alert('Indo para Check-in...')">
-        <div class="btn-icon"><i class="fa-solid fa-user"></i></div>
-        <div class="btn-text">
-          <h3>Check-in</h3>
-          <p>Faça seu check-in de forma rápida e fácil</p>
-        </div>
-      </button>
-
-      <button class="btn" onclick="alert('Indo para Check-out...')">
-        <div class="btn-icon"><i class="fa-solid fa-suitcase"></i></div>
-        <div class="btn-text">
-          <h3>Check-out</h3>
-          <p>Finalize sua estadia</p>
-        </div>
-      </button>
-
-      <button class="btn" onclick="alert('Indo para Informações...')">
-        <div class="btn-icon"><i class="fa-solid fa-circle-info"></i></div>
-        <div class="btn-text">
-          <h3>Informações</h3>
-          <p>Tire suas dúvidas sobre o hotel</p>
-        </div>
-      </button>
-
-      <button class="btn" onclick="dispararAlarme()" style="background-color: #0f172a;">
-        <div class="btn-icon"><i class="fa-solid fa-headset"></i></div>
-        <div class="btn-text">
-          <h3>Falar com a recepção</h3>
-          <p>Precisa de ajuda? Fale com um atendente</p>
-        </div>
-      </button>
+    <!-- TELA 3: CHECK-IN CONCLUÍDO -->
+    <div id="checkin-2" class="screen text-center">
+      <div class="logo-area"><i class="fa-solid fa-circle-check" style="color: #16a34a;"></i><h2 style="color: #16a34a;">Check-in Concluído</h2></div>
+      <div class="info-box">
+        <p><strong><i class="fa-solid fa-door-closed"></i> Quarto:</strong> 205</p>
+        <p><strong><i class="fa-solid fa-mug-hot"></i> Café da manhã:</strong> 7h às 10h</p>
+        <p><strong><i class="fa-solid fa-wifi"></i> Wi-Fi:</strong> HOTELIA205</p>
+      </div>
+      <p style="margin-bottom: 20px;">Pronto! Pegue sua chave na bandeja abaixo.</p>
+      <button class="btn-action btn-success" onclick="nav('home')">Finalizar</button>
     </div>
+
+    <!-- TELA 4: CHECK-OUT PASSO 1 -->
+    <div id="checkout-1" class="screen text-center">
+      <div class="logo-area"><i class="fa-solid fa-suitcase-rolling"></i><h2>Fazer Check-out</h2></div>
+      <div class="info-box">
+        <p><strong>Hóspede:</strong> Maria Oliveira</p>
+        <p><strong>Quarto:</strong> 205</p>
+        <hr>
+        <p>Diária: R$ 250,00</p>
+        <p>Restaurante: R$ 45,00</p>
+        <h3 style="margin-top: 10px; color: #0284c7;">Total: R$ 295,00</h3>
+      </div>
+      <p style="margin-bottom: 15px;">Deseja confirmar o check-out?</p>
+      <button class="btn-action btn-success" onclick="nav('checkout-2')">Sim, confirmar</button>
+      <button class="btn-action btn-secondary" onclick="nav('home')">Voltar</button>
+    </div>
+
+    <!-- TELA 5: CHECK-OUT CONCLUÍDO -->
+    <div id="checkout-2" class="screen text-center">
+      <div class="logo-area"><i class="fa-solid fa-handshake" style="color: #0284c7;"></i><h2 style="color: #0284c7;">Check-out Realizado!</h2></div>
+      <p style="font-size: 18px; margin-bottom: 30px;">Obrigado por se hospedar conosco. Volte sempre!</p>
+      <button class="btn-action btn-primary" onclick="nav('home')">Voltar ao Início</button>
+    </div>
+
+    <!-- TELA 6: INFORMAÇÕES/IA PASSO 1 -->
+    <div id="ai-1" class="screen text-center">
+      <div class="logo-area"><i class="fa-solid fa-robot"></i><h2>Assistente Virtual</h2></div>
+      <p style="margin-bottom: 15px;">Descreva o que você precisa:</p>
+      <!-- Input com readonly simulando que a pessoa digitou ou falou -->
+      <input type="text" value="Meu quarto está com problema no ar-condicionado." readonly style="background: #f1f5f9; color: #64748b;">
+      <button class="btn-action btn-primary" onclick="nav('ai-2')">Enviar</button>
+      <button class="btn-action btn-secondary" onclick="nav('home')">Voltar</button>
+    </div>
+
+    <!-- TELA 7: INFORMAÇÕES/IA PASSO 2 (PROBLEMA IDENTIFICADO) -->
+    <div id="ai-2" class="screen text-center">
+      <div class="logo-area"><i class="fa-solid fa-triangle-exclamation" style="color: #ea580c;"></i><h2 style="color: #ea580c;">Atenção Necessária</h2></div>
+      <div class="info-box text-center" style="background: #fff7ed; border-color: #fdba74;">
+        <p>⚠️ <strong>"Essa situação necessita de atendimento da equipe de manutenção."</strong></p>
+      </div>
+      <p style="margin-bottom: 15px;">Deseja chamar um recepcionista para auxiliá-lo?</p>
+      <button class="btn-action btn-danger" onclick="nav('reception'); dispararAlarme()">👩‍💼 CHAMAR RECEPCIONISTA</button>
+      <button class="btn-action btn-secondary" onclick="nav('home')">Cancelar</button>
+    </div>
+
+    <!-- TELA 8: RECEPÇÃO CHAMADA -->
+    <div id="reception" class="screen text-center">
+      <div class="logo-area"><i class="fa-solid fa-user-tie" style="color: #0f172a;"></i><h2 style="color: #0f172a;">Atendimento Humano</h2></div>
+      <div class="info-box text-center">
+        <h3 style="color: #16a34a; margin-bottom: 10px;">✅ Recepcionista acionado!</h3>
+        <p>Por favor, aguarde. Um de nossos colaboradores já está a caminho para ajudá-lo de forma personalizada.</p>
+      </div>
+      <button class="btn-action btn-primary" onclick="nav('home')">Voltar ao Início</button>
+    </div>
+
   </div>
 
+  <!-- LADO DIREITO: IMAGEM E ROBÔ (Fixo) -->
   <div class="right-panel">
-    <!-- Imagem demonstrativa de uma recepção (você pode trocar pelo link de uma foto do projeto de vocês) -->
     <img src="https://images.unsplash.com/photo-1562790351-d273a961e0e9?q=80&w=800&auto=format&fit=crop" alt="Recepção do Hotel" class="hotel-image">
-    
     <div class="robot-area">
-      <div class="speech-bubble">Estamos aqui<br>para te atender!</div>
+      <div class="speech-bubble" id="balao-robo">Estamos aqui<br>para te atender!</div>
       <div class="robot-icon"><i class="fa-solid fa-robot"></i></div>
     </div>
   </div>
@@ -239,10 +319,33 @@
 </div>
 
 <script>
+  // Função para navegar entre as telas
+  function nav(screenId) {
+    // Esconde todas as telas
+    var screens = document.querySelectorAll('.screen');
+    for (var i = 0; i < screens.length; i++) {
+      screens[i].classList.remove('active-screen');
+    }
+    // Mostra a tela desejada
+    document.getElementById(screenId).classList.add('active-screen');
+    
+    // Bônus: Muda o texto do balãozinho do robô dependendo da tela!
+    var balao = document.getElementById('balao-robo');
+    if (screenId === 'home') balao.innerHTML = "Estamos aqui<br>para te atender!";
+    else if (screenId === 'checkin-1' || screenId === 'checkin-2') balao.innerHTML = "Processo rápido<br>e sem filas!";
+    else if (screenId === 'checkout-1' || screenId === 'checkout-2') balao.innerHTML = "Esperamos que<br>tenha gostado!";
+    else if (screenId === 'ai-1' || screenId === 'ai-2') balao.innerHTML = "Inteligência Artificial<br>ao seu dispor!";
+    else if (screenId === 'reception') balao.innerHTML = "Humano a caminho!";
+  }
+
+  // Função do Alarme
   function dispararAlarme() {
-    alert("🚨 ALERTA ENVIADO! O dispositivo da recepção está tocando.");
-    // Aqui entra o código de comunicação (WebSocket, Fetch ou BroadcastChannel)
-    // que discutimos na mensagem anterior.
+    // Aqui você integra com a função do WebHook/BroadcastChannel 
+    // que conversamos anteriormente para apitar no celular.
+    console.log("Sinal enviado para o celular da recepção!");
+    
+    // Apenas para demonstração visual no navegador (pode remover se não quiser o pop-up)
+    // alert("🚨 ALERTA: Sinal enviado para o dispositivo da recepção!");
   }
 </script>
 
