@@ -350,6 +350,10 @@
     // Apenas para demonstração visual no navegador (pode remover se não quiser o pop-up)
     // alert("🚨 ALERTA: Sinal enviado para o dispositivo da recepção!");
   }
+
+ if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js');
+ }
 </script>
 
 </body>
