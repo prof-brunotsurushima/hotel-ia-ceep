@@ -1,6 +1,6 @@
 {
-  "name": "Nome do Seu Aplicativo",
-  "short_name": "SeuApp",
+  "name": "Hotel IA CEEP",
+  "short_name": "Hotel-IA",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
