@@ -1,0 +1,10 @@
+{
+  "name": "Hotel IA CEEP",
+  "short_name": "Hotel IA",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "fullscreen",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "lang": "pt-br"
+}
