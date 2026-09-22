@@ -351,9 +351,13 @@
     // alert("🚨 ALERTA: Sinal enviado para o dispositivo da recepção!");
   }
 
- if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js');
- }
+ if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service Worker registrado com sucesso!'))
+          .catch(err => console.error('Erro ao registrar Service Worker:', err));
+      });
+    }
 </script>
 
 </body>
