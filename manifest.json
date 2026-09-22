@@ -1,16 +1,19 @@
 {
-  "name": "Hotel IA CEEP",
-  "short_name": "Hotel IA",
-  "start_url": "./index.html",
-  "scope": "./",
+  "name": "Nome do Seu Aplicativo",
+  "short_name": "SeuApp",
+  "start_url": "/index.html",
   "display": "standalone",
-  "theme_color": "#000000",
   "background_color": "#ffffff",
-  "lang": "pt-br",
-  "icons":[
+  "theme_color": "#007bff",
+  "icons": [
     {
-      "src": "icone-192.png",,
-      "sizes": "192x192,
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
