@@ -1,14 +1,19 @@
 {
-  "name": "Hotel IA CEEP",
-  "short_name": "Hotel-IA",
-  "start_url": "/index.html",
-  "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#007bff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "HOTEL IA CEEP",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "HOTEL_IA",
+  "start_url": "./index.html",
+  "theme_color": "#ffffff",
+  "description": "Projeto FETEC",
+  "lang": "pt",
   "icons": [
     {
      "src": "icon.svg",
       "sizes": "192x192 512x512",
       "type": "image/svg+xml"
-  ]
+      ]
 }
